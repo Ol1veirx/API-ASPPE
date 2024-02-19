@@ -14,13 +14,13 @@ namespace API_ASPPE.Services
         {
             _context = context;
         }
-        public async Task<Torneio> CriarTorneio(string nome, DateTime dataInicio, string localizacao)
+        public async Task<Torneio> CriarTorneio(Torneio torneio)
         {
             var novoTorneio = new Torneio
             {
-                Nome = nome,
-                DataInicio = dataInicio,
-                Localizacao = localizacao
+                Nome = torneio.Nome,
+                DataInicio = torneio.DataInicio,
+                Localizacao = torneio.Localizacao
             };
 
             _context.Torneios.Add(novoTorneio);
@@ -29,20 +29,20 @@ namespace API_ASPPE.Services
             return novoTorneio;
         }
 
-        public async Task<Torneio> AlterarTorneio(Torneio torneio,int? torneioId)
+        public async Task<Torneio> AlterarTorneio(Torneio torneio)
         {
-            var torneioExisting = await _context.Torneios.FirstOrDefaultAsync(t => t.Id == torneioId);
+            var index = await _context.Torneios.FirstOrDefaultAsync(t => t.Id == torneio.Id);
 
-            if (torneioExisting == null) return null;
+            if (index == null) return null;
 
-            torneioExisting.Nome = torneio.Nome;
-            torneioExisting.Localizacao = torneio.Localizacao;
-            torneioExisting.DataInicio = torneio.DataInicio;
+            index.Nome = torneio.Nome;
+            index.Localizacao = torneio.Localizacao;
+            index.DataInicio = torneio.DataInicio;
 
-            _context.Torneios.Update(torneioExisting);
+            _context.Torneios.Update(index);
             await _context.SaveChangesAsync();
 
-            return torneioExisting;
+            return index;
         }
 
         public void ExcluirTorneio(int? id)

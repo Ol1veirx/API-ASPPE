@@ -1,4 +1,5 @@
 using API_ASPPE.Data;
+using API_ASPPE.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,17 +15,24 @@ builder.Services.AddDbContext<APContext>(options =>
     var connectionString = builder.Configuration.GetConnectionString("APConnection");
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
+builder.Services.AddScoped<TorneioServices>();
+builder.Services.AddScoped<EquipeServices>();
+builder.Services.AddScoped<EtapaServices>();
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    });
 }
 
-app.UseHttpsRedirection();
+app.UseHttpsRedirection(); 
 
 app.UseAuthorization();
 

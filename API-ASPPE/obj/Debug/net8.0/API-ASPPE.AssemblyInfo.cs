@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("API-ASPPE")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c07146a8830150ea79fd7c8346215069e232558f")]
 [assembly: System.Reflection.AssemblyProductAttribute("API-ASPPE")]
 [assembly: System.Reflection.AssemblyTitleAttribute("API-ASPPE")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

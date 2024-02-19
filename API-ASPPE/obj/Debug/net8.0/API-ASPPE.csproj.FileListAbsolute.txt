@@ -102,3 +102,4 @@ D:\API-ASPPE\API-ASPPE\obj\Debug\net8.0\refint\API-ASPPE.dll
 D:\API-ASPPE\API-ASPPE\obj\Debug\net8.0\API-ASPPE.pdb
 D:\API-ASPPE\API-ASPPE\obj\Debug\net8.0\API-ASPPE.genruntimeconfig.cache
 D:\API-ASPPE\API-ASPPE\obj\Debug\net8.0\ref\API-ASPPE.dll
+D:\API-ASPPE\API-ASPPE\obj\Debug\net8.0\API-ASPPE.sourcelink.json
