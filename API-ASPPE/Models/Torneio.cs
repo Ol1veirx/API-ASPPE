@@ -8,5 +8,6 @@
         public string? Localizacao { get; set; }
 
         public ICollection<Equipe>? Equipes { get; set; }
+        public ICollection<Etapa>? Etapas { get; set; }
     }
 }

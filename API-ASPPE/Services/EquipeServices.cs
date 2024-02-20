@@ -1,5 +1,6 @@
 ﻿using API_ASPPE.Data;
 using API_ASPPE.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API_ASPPE.Services
@@ -11,26 +12,33 @@ namespace API_ASPPE.Services
         {
             _context = context;
         }
-        public async Task<Equipe> AdicionarEquipe(int torneioId, string nome)
+
+        public async Task<Equipe> GetEquipe(int id)
         {
-            var torneioExiste = await _context.Torneios.FirstOrDefaultAsync(t => t.Id == torneioId);
+            return await _context.Equipes.FirstOrDefaultAsync(e => e.Id == id);
+        }
 
-            if (torneioExiste == null) return null;
+        public async Task<Equipe> AdicionarEquipe(int torneioId, Equipe equipe)
+        {
+            
+                var torneio = await _context.Torneios.FindAsync(torneioId);
+                if (torneio == null) return null;
 
-            var novaEquipe = new Equipe
-            {
-                Nome = nome,
-            };
+                /*var novaEquipe = new Equipe
+                {
+                    Nome = nomeEquipe
+                };*/
 
-            torneioExiste.Equipes.Add(novaEquipe);
-            await _context.SaveChangesAsync();
+                equipe.TorneioId = torneioId;
+                _context.Equipes.Add(equipe);
+                await _context.SaveChangesAsync();
 
-            return novaEquipe;
+                return equipe;
         }
 
         public async Task<bool> RemoverEquipe(int torneioId, int equipeId)
         {
-            var torneio = await _context.Torneios.Include(t => t.Equipes).FirstOrDefaultAsync(t => t.Id ==  equipeId);
+            var torneio = await _context.Torneios.Include(t => t.Equipes).FirstOrDefaultAsync(t => t.Id ==  torneioId);
 
             if(torneio == null) return false;
 
@@ -42,6 +50,22 @@ namespace API_ASPPE.Services
             await _context.SaveChangesAsync();
 
             return true;
+        }
+        public async Task<Equipe> AlterarEquipe(int torneioId, int equipeId ,Equipe equipe)
+        {
+            var equipeExiste = await _context.Torneios.Include(e => e.Equipes).FirstOrDefaultAsync(t => t.Id == torneioId);
+            if (equipeExiste == null) return null;
+
+            var index = await _context.Equipes.FirstOrDefaultAsync(e => e.Id == equipeId);
+            if (index == null) return null;
+
+            index.Nome = equipe.Nome;
+            index.TorneioId = equipe.TorneioId;
+
+            _context.Update(index);
+            await _context.SaveChangesAsync();
+
+            return index;
         }
     }
 }

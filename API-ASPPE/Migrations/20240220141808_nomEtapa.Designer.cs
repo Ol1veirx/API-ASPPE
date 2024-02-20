@@ -2,6 +2,7 @@
 using API_ASPPE.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_ASPPE.Migrations
 {
     [DbContext(typeof(APContext))]
-    partial class APContextModelSnapshot : ModelSnapshot
+    [Migration("20240220141808_nomEtapa")]
+    partial class nomEtapa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,6 +76,9 @@ namespace API_ASPPE.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("EquipeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nome")
                         .HasColumnType("longtext");
 
@@ -80,6 +86,8 @@ namespace API_ASPPE.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EquipeId");
 
                     b.HasIndex("TorneioId");
 
@@ -138,11 +146,19 @@ namespace API_ASPPE.Migrations
 
             modelBuilder.Entity("API_ASPPE.Models.Etapa", b =>
                 {
+                    b.HasOne("API_ASPPE.Models.Equipe", "Equipe")
+                        .WithMany()
+                        .HasForeignKey("EquipeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("API_ASPPE.Models.Torneio", "Torneio")
                         .WithMany("Etapas")
                         .HasForeignKey("TorneioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Equipe");
 
                     b.Navigation("Torneio");
                 });

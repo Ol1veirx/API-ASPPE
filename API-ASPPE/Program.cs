@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using API_ASPPE.Data;
 using API_ASPPE.Services;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,11 @@ builder.Services.AddDbContext<APContext>(options =>
     var connectionString = builder.Configuration.GetConnectionString("APConnection");
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+});
+
 builder.Services.AddScoped<TorneioServices>();
 builder.Services.AddScoped<EquipeServices>();
 builder.Services.AddScoped<EtapaServices>();
